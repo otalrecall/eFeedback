@@ -1,0 +1,72 @@
+{% extends "tasksApp/base.html" %}
+
+{% block title %}Solutions{% endblock %}
+{% block title2 %}Solutions{% endblock %}
+{% block title3 %}Solutions{% endblock %}
+
+{% block content %}
+
+<!-- solutionList -->
+<div id="content" class="row">
+    {% for solution in solution_list|dictsort:"task.id"%}
+    <div class="col s12 m6 l4">
+        <div class="card hoverable">
+           <div class="card-content" onclick="location.href='{% url 'SolutionDetail' solution.task.id solution.id %}';">
+               <span class="card-title">Solution of task {{ solution.task.id}} </span>
+                <p class="truncate">created by : {{ solution.student_email }}</p>
+                <p class="truncate">date : {{ solution.creation_date }}</p>
+                <p class="truncate">content preview : {{ solution.content|slice:":50" }}</p>
+            </div>
+            <div class="card-action">
+                <a class="waves-effect waves-teal btn-flat" href="{% url 'feedbackAdd' solution.task.id solution.id %}">Feedback</a>
+                {% if solution.task.checkList %}
+                <a class="waves-effect waves-teal btn-flat" href="{% url 'checkListFill' solution.task.id solution.id %}">Fill checklist</a>
+                {% endif %}
+
+                <a class='dropdown-button right' href='#' data-activates='dropdown{{ solution.id }}'><i
+                        class="material-icons">more_vert</i></a>
+
+                <!-- Dropdown Structure -->
+                <ul id='dropdown{{ solution.id }}' class='dropdown-content'>
+                    <li><a href="{% url 'SolutionUpdate' solution.task.id solution.id %}"><i class="material-icons">mode_edit</i>Edit</a></li>
+                    <li><a href="{% url 'SolutionDelete' solution.id %}"><i class="material-icons">delete</i>Delete</a></li>
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <!-- solutionDetail -->
+    <div id="solutionDetail{{ solution.id }}" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>{{ solution.creation_date }}</h4>
+
+            <p>{{ solution.content }}</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Back</a>
+        </div>
+    </div>
+
+
+    {% endfor %}
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+
+$('.dropdown-button').dropdown({
+hover: true, constrain_width: false,  belowOrigin: true,  });
+
+function toast() {
+Materialize.toast('Added task', 3000, 'rounded')
+}
+
+$('.datepicker').pickadate({selectMonths: true,  selectYears: 15  });
+
+$(document).ready(function () {
+$('select').material_select(); });
+
+{% endblock %}

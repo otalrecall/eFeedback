@@ -1,0 +1,82 @@
+{% extends "tasksApp/base.html" %}
+{% block title %}Checklist: {{ task.checkList.name }} for {{ task.name }}{% endblock %}
+{% block title2 %}Checklist: {{ task.checkList.name }} for {{ task.name }}{% endblock %}
+{% block title3 %}Checklist: {{ task.checkList.name }} for {{ task.name }}{% endblock %}
+
+{% block backButton %}
+<ul class="left">
+    <li><a href="{% url 'index' %}">
+        <i class="material-icons">arrow_back</i></a></li>
+</ul>
+<ul class="right">
+    <li><a href="{% url 'checkListUpdate' task.id %}">
+        <i class="material-icons">mode_edit</i></a></li>
+    <li><a href="{% url 'checkListDelete' task.checkList.id %}">
+        <i class="material-icons">delete</i></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<!-- checkList -->
+<div class="row">
+    {% for check in check_list.all %}
+
+    <div class="col s12 m6 l4">
+        <div class="card hoverable">
+            <div class="card-content" onclick="location.href='{% url 'checkDetail' task.id check.id %}';">
+                <span class="card-title">{{ check.name }}</span>
+
+                <div class="row">
+                    <p class="truncate">{{ check.description }}</p>
+                </div>
+
+
+            </div>
+            <div class="card-action">
+                <a href="{% url 'checkEdit' task.id check.id %}" class="amber-text tooltipped" data-position="top"
+                   data-delay="50" data-tooltip="edit check">
+                    <i class="material-icons">mode_edit</i></a>
+                <a href="{% url 'checkDelete' task.id check.id %}" class="secondary-content tooltipped" data-position="top" data-delay="50"
+                   data-tooltip="delete check">
+                    <i class="material-icons amber-text">delete</i></a>
+            </div>
+        </div>
+    </div>
+    <!-- checkDetail -->
+    <div id="popupCheck{{ check.id }}" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>{{ check.name }}</h4>
+
+            <p>{{ check.description }}</p>
+
+
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Back</a>
+        </div>
+    </div>
+
+    {% empty %}
+    <h1 class="center-align grey-text text-lighten-2">No checks</h1>
+    {% endfor %}
+</div>
+<!-- checkAddButton -->
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large amber">
+        <i class="large material-icons">add</i>
+    </a>
+    <ul>
+        <li><a href="{% url 'checkAdd' task.id %}" class="btn-floating waves-effect waves-light amber tooltipped" data-position="left"
+               data-delay="50" data-tooltip="Add new check"><i class="material-icons">add</i></a></li>
+        <li><a href="{% url 'checkAddExisting' task.id %}" class="btn-floating waves-effect waves-light green tooltipped" data-position="left"
+               data-delay="50" data-tooltip="Add existing check"><i class="material-icons">library_add</i></a></li>
+    </ul>
+</div>
+
+{% endblock %}
+
+{% block script %}
+function toast() {
+Materialize.toast('Added check to check list', 3000, 'rounded')
+}
+{% endblock %}

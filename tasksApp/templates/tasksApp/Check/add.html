@@ -1,0 +1,48 @@
+{% extends "tasksApp/base.html" %}
+
+{% block title %}Adding new check to {{ task.name }}{% endblock %}
+{% block title2 %}Adding new check to {{ task.name }}{% endblock %}
+{% block title3 %}Adding new check to {{ task.name }}{% endblock %}
+
+{% block backButton %}
+<ul class="left">
+    <li><a href="javascript:window.location.replace(document.referrer)">
+        <i class="material-icons">arrow_back</i></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="margin-top:50px;">
+    <form class="col s12" id="addcheckForm" action="{% url 'checkCreate' task.id %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-field col s6">
+                <input type="text" name="name" id="name" class="validate"/>
+                <label for="name">Name</label>
+                <br/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <textarea id="description" name="description" class="materialize-textarea validate"></textarea>
+                <label for="description">Description</label>
+            </div>
+        </div>
+    </form>
+
+    <button class="btn waves-effect waves-light" type="submit" form="addcheckForm" name="action"
+            onclick="return toast();">Submit
+        <i class="material-icons right">send</i>
+    </button>
+</div>
+{% endblock %}
+
+
+{% block script %}
+
+function toast() {
+Materialize.toast('Added check to check list', 3000, 'rounded')
+}
+
+{% endblock %}

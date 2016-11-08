@@ -1,0 +1,78 @@
+{% extends "tasksApp/base.html" %}
+
+{% block title %}Adding new task{% endblock %}
+{% block title2 %}Adding new task{% endblock %}
+{% block title3 %}Adding new task{% endblock %}
+
+{% block backButton %}
+<ul class="left">
+    <li><a href="javascript:window.location.replace(document.referrer)">
+        <i class="material-icons">arrow_back</i></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="margin-top:50px;">
+    <form id="taskAddForm" action="{% url 'taskCreate' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class=" col s12 m6">
+                <div class="input-field row">
+                    <input type="text" name="name" id="name" class="validate" required/>
+                    <label for="name" class="active">Name</label>
+                </div>
+                <div class="input-field row">
+
+                    <textarea id="description" name="description" class="validate materialize-textarea"></textarea>
+                    <label for="description" class="active">Description</label>
+
+                </div>
+                <div class="input-field row">
+                    <input type="text" name="feedb_templ_1" id="feedb_templ_1" class="validate" required/>
+                    <label for="feedb_templ_1" class="active">Feedback header</label>
+                </div>
+                <div class="input-field row">
+                    <input type="text" name="feedb_templ_2" id="feedb_templ_2" class="validate" required/>
+                    <label for="feedb_templ_2" class="active">Feedback footer</label>
+                </div>
+            </div>
+
+
+            <div class="input-field col s12 m6">
+
+
+                <select id="checklist" name="checklist" required>
+                    <option value="" disabled selected>Select a checklist</option>
+                    {% for checklist in checklist_list %}
+                    <option value="{{ checklist.id }}">{{ checklist.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="checklist">Checklist</label>
+            </div>
+            <a class="waves-effect waves-light btn white-text right" href="{% url 'checkListAdd' %}">new checklist</a>
+
+
+        </div>
+
+    </form>
+
+
+    <button class="btn waves-effect waves-light right" type="submit" form="taskAddForm" name="action"
+            onclick="return toastTaskAdded();">Add
+
+    </button>
+
+</div>
+
+{% endblock %}
+{% block script %}
+
+function toastTaskAdded() {
+Materialize.toast('Task added', 3000, 'rounded')
+}
+$('.dropdown-button').dropdown({
+hover: true, constrain_width: false,  belowOrigin: true,  });
+$(document).ready(function () { $('select').material_select(); });
+{% endblock %}

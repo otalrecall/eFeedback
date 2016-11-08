@@ -1,0 +1,38 @@
+{% extends "tasksApp/base.html" %}
+
+{% block title %} Solution of task {{ solution.task.id }} created by {{ solution.student_email}}{% endblock %}
+{% block title2 %}Solution of task {{ solution.task.id }} created by {{ solution.student_email}}{% endblock %}
+{% block title3 %}Solution of task {{ solution.task.id }} created by {{ solution.student_email}}{% endblock %}
+
+{% block backButton %}
+<ul class="left">
+    <li><a href="javascript:window.location.replace(document.referrer)">
+        <i class="material-icons">arrow_back</i></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="margin-top:50px;">
+
+<p>creation date: {{ solution.creation_date }}</p>
+<p>associated task id : {{ solution.task.id}} - name: {{ solution.task.name }}</p>
+<p>student's mail: {{ solution.student_email }}</p>
+<p>content: {{ solution.content }}</p>
+
+<a class="btn waves-effect waves-light right" href="{% url 'SolutionDeleteTasked' task solution.id %}"><i class="material-icons">delete</i>Delete</a>
+
+<p><a class="btn waves-effect waves-light" href="{% url 'feedbackAdd' task solution.id %}">Generate feedback</a>
+
+   </div>
+        {% endblock %}
+    {% block script %}
+
+    function toastTaskEdited() {
+    Materialize.toast('Task edited', 3000, 'rounded')
+    }
+
+    $('.dropdown-button').dropdown({
+    hover: true, constrain_width: false, belowOrigin: true, });
+    $(document).ready(function () { $('select').material_select(); });
+    {% endblock %}

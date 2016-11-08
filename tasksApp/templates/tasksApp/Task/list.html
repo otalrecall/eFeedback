@@ -1,0 +1,61 @@
+{% extends "tasksApp/base.html" %}
+
+{% block title %}Tasks{% endblock %}
+{% block title2 %}Tasks{% endblock %}
+{% block title3 %}Tasks{% endblock %}
+
+{% block content %}
+
+<!-- taskList -->
+<div id="content" class="row">
+    {% for task in task_list %}
+    <div class="col s12 m6 l4">
+        <div class="card hoverable">
+            <div class="card-content" onclick="location.href='{% url 'taskDetail' task.id %}';">
+                <span class="card-title">{{ task.name }}</span>
+
+                <p class="truncate">{{ task.description }}</p>
+            </div>
+            <div class="card-action">
+                {% if task.checkList %}
+                <a class="waves-effect waves-teal btn-flat" href="{% url 'checklistTask' task.id %}">checklist</a>
+                {% else %}
+                <a class="btn-flat grey-text disabled" disbled>checklist</a>
+                {% endif %}
+                <a class="waves-effect waves-teal btn-flat" href="{% url 'TaskSolutionList' task.id %}">Solutions
+                    {% for solution in solution %}
+                    {% if solution.task.id == task.id %}
+                    {{ I }}
+                    {% endif %}
+                    {% endfor %}
+                </a>
+                <!-- Dropdown Trigger -->
+                <a class='dropdown-button right' href='#' data-activates='dropdown{{ task.id }}'><i
+                        class="material-icons">more_vert</i></a>
+
+                <!-- Dropdown Structure -->
+                <ul id='dropdown{{ task.id }}' class='dropdown-content'>
+                    <li><a href="{% url 'taskEdit' task.id %}"><i class="material-icons">mode_edit</i>Edit</a></li>
+                    <li><a href="{% url 'deleteTask' task.id %}"><i class="material-icons">delete</i>Delete</a></li>
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <h1 class="center-align grey-text text-lighten-2">No tasks</h1>
+    {% endfor %}
+</div>
+<!-- taskAddButton -->
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a href="{% url 'taskAdd' %}" class="btn-floating btn-large waves-effect waves-light amber tooltipped"
+       data-position="left" data-delay="50" data-tooltip="Add new task"><i class="material-icons">add</i></a>
+</div>
+
+{% endblock %}
+{% block script %}
+
+$('.dropdown-button').dropdown({
+hover: true, constrain_width: false,  belowOrigin: true,  });
+{% endblock %}

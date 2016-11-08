@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    {% load staticfiles %}
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'tasksApp/materialize/css/materialize.min.css' %}">
+    <link  href="{% static 'tasksApp/materialize/font/material-design-icons/Material-Design-Icons.eot' %}">
+    <link  href="{% static 'tasksApp/materialize/font/material-design-icons/Material-Design-Icons.woff' %}">
+    <link  href="{% static 'tasksApp/materialize/font/material-design-icons/Material-Design-Icons.woff2' %}">
+    <link  href="{% static 'tasksApp/materialize/font/material-design-icons/Material-Design-Icons.ttf' %}">
+    <link rel="stylesheet" href="{% static 'tasksApp/style.css' %}">
+    <!-- Compiled and minified JavaScript -->
+    <script type="text/javascript" src="{% static 'tasksApp/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'tasksApp/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'tasksApp/materialize/js/materialize.min.js' %}"></script>
+
+
+</head>
+<style>
+    body {
+    background-color: #3F51B5;
+
+    }
+</style>
+
+<body>
+
+            <h1 class="center-align white-text">TasksApp</h1>
+      <div class="container">
+        <div class="col s12 m8 l6 offset-m2 offset-l7">
+          <div class="card">
+            <div class="card-content">
+              <div class="row">
+                <form class="col s12" id="login" action="{% url 'tasklist' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="text" name="username" id="username" required/>
+                            <label for="username">Username</label><br/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="password" name="password" type="password" required>
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </div>
+            <div class="card-action right-align">
+              <a class="amber-text" href="{% url 'tasklist' %}">Signup</a>
+                <button class="btn waves-effect waves-light amber" type="submit" form="login" name="action">Login</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

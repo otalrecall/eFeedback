@@ -1,0 +1,55 @@
+{% extends "tasksApp/base.html" %}
+
+{% block title %}New solutions for {{ task.name }}{% endblock %}
+{% block title2 %}New solutions for {{ task.name }}{% endblock %}
+{% block title3 %}New solutions for {{ task.name }}{% endblock %}
+
+{% block backButton %}
+<ul class="left">
+    <li><a href="javascript:window.location.replace(document.referrer)">
+        <i class="material-icons">arrow_back</i></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<!-- solutionAdd -->
+<div class="container" style="margin-top:50px;">
+    <form id="solutionAddForm" action="{% url 'SolutionCreate' task.id %}" method="post">
+        {% csrf_token %}
+        <p>Creation date : {% now "jS F Y H:i" %}</p>
+
+        <div class="input-field row">
+            <div class="input-field col s12">
+                <textarea id="emails" name="emails" class="materialize-textarea" placeholder="Email for first solution
+...
+Email for last solution"></textarea>
+                <label for="emails"class="active" >emails</label>
+            </div>
+        </div>
+
+    </form>
+
+
+    <button class="btn waves-effect waves-light" type="submit" form="solutionAddForm" name="action"
+            onclick="return toast();">Submit
+        <i class="material-icons right">send</i>
+    </button>
+
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+
+function toast() {
+Materialize.toast('Added solution', 3000, 'rounded')
+}
+
+$('.datepicker').pickadate({selectMonths: true,  selectYears: 15  });
+
+$(document).ready(function () {
+$('select').material_select(); });
+
+{% endblock %}

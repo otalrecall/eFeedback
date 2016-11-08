@@ -1,0 +1,41 @@
+{% extends "tasksApp/base.html" %}
+
+{% block title %}{{ task.name }}{% endblock %}
+{% block title2 %}{{ task.name }}{% endblock %}
+{% block title3 %}{{ task.name }}{% endblock %}
+
+{% block backButton %}
+<ul class="left">
+    <li><a href="{% url 'index' %}">
+        <i class="material-icons">arrow_back</i></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="margin-top:50px;">
+
+<p>{{ task.description }}</p>
+
+<a class="btn waves-effect waves-light right" href="{% url 'deleteTask' task.id %}"><i class="material-icons">delete</i>Delete</a>
+
+<p>
+    {% if task.checkList %}
+                <a class="btn waves-effect waves-light" href="{% url 'checklistTask' task.id %}">Checklist</a>
+                {% else %}
+                <a class="btn waves-effect waves-light disbled">checklist</a>
+    {% endif %}
+    <a class="btn waves-effect waves-light" href="{% url 'TaskSolutionList' task.id %}">Solutions</a></p>
+
+   </div>
+        {% endblock %}
+    {% block script %}
+
+    function toastTaskEdited() {
+    Materialize.toast('Task edited', 3000, 'rounded')
+    }
+
+    $('.dropdown-button').dropdown({
+    hover: true, constrain_width: false, belowOrigin: true, });
+    $(document).ready(function () { $('select').material_select(); });
+    {% endblock %}

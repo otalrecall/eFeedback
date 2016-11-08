@@ -1,0 +1,47 @@
+{% extends "tasksApp/base.html" %}
+
+{% block title %}check: {{ check.name }}{% endblock %}
+{% block title2 %}check: {{ check.name }}{% endblock %}
+{% block title3 %}check: {{ check.name }}{% endblock %}
+
+{% block backButton %}
+<ul class="left">
+    <li><a href="javascript:window.location.replace(document.referrer)">
+        <i class="material-icons">arrow_back</i></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="margin-top:50px;">
+
+<div class="row">
+            <div class="input-field col s6">
+                <label>Name:</label><br>
+                <p>{{ check.name }}"</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <label>Description: </label><br>
+                <p>{{ check.description }}</p>
+            </div>
+        </div>
+<a class="btn waves-effect waves-light right" href="{% url 'checkDelete' task check.id %}"><i class="material-icons">delete</i>Delete</a>
+
+
+</div>
+
+
+{% endblock %}
+
+
+{% block script %}
+
+function toast() {
+Materialize.toast('Edited check', 3000, 'rounded')
+}
+
+{% endblock %}
+

@@ -1,0 +1,71 @@
+{% extends "tasksApp/base.html" %}
+
+{% block title %}Solutions for {{ task.name }}{% endblock %}
+{% block title2 %}Solutions for {{ task.name }}{% endblock %}
+{% block title3 %}Solutions for {{ task.name }}{% endblock %}
+
+{% block backButton %}
+<ul class="left">
+    <li><a href="{% url 'index' %}">
+        <i class="material-icons">arrow_back</i></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<!-- solutionList -->
+<div id="content" class="row">
+    {% for solution in solution_list|dictsort:"creation_date" %}
+    <div class="col s12 m6 l4">
+        <div class="card hoverable">
+            <div class="card-content" onclick="location.href='{% url 'SolutionDetail' task.id solution.id %}';">
+                <span class="card-title">Solution created by : {{ solution.student_email }}</span>
+                <p class="truncate">date : {{ solution.creation_date }}</p>
+                <p class="truncate">content preview : {{ solution.content|slice:":20" }}</p>
+            </div>
+            <div class="card-action">
+                <a class="waves-effect waves-teal btn-flat" href="{% url 'feedbackAdd' task.id solution.id %}">feedback</a>
+                {% if task.checkList %}
+                <a class="waves-effect waves-teal btn-flat" href="{% url 'checkListFill' task.id solution.id %}">Fill checklist</a>
+                {% endif %}
+
+                <a class='dropdown-button right' href='#' data-activates='dropdown{{ solution.id }}'><i
+                        class="material-icons">more_vert</i></a>
+
+                <!-- Dropdown Structure -->
+                <ul id='dropdown{{ solution.id }}' class='dropdown-content'>
+                    <li><a href="{% url 'SolutionUpdate' solution.task.id solution.id %}"><i class="material-icons">mode_edit</i>Edit</a></li>
+                    <li><a href="{% url 'SolutionDeleteTasked'  solution.task.id solution.id %}"><i class="material-icons">delete</i>Delete</a></li>
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <h1 class="center-align grey-text text-lighten-2">No solutions</h1>
+    {% endfor %}
+</div>
+<!-- SolutionAddButton -->
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a href="{% url 'SolutionAdd' task.id %}" class="btn-floating btn-large waves-effect waves-light amber tooltipped"
+       data-position="left" data-delay="50" data-tooltip="Add new solutions"><i class="material-icons">add</i></a>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+$('.dropdown-button').dropdown({
+hover: true, constrain_width: false,  belowOrigin: true,  });
+
+function toast() {
+Materialize.toast('Added task', 3000, 'rounded')
+}
+
+$('.datepicker').pickadate({selectMonths: true,  selectYears: 15  });
+
+$(document).ready(function () {
+$('select').material_select(); });
+
+{% endblock %}

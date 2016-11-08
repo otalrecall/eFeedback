@@ -1,0 +1,64 @@
+{% extends "tasksApp/base.html" %}
+
+{% block title %}Adding new Checklist{% endblock %}
+{% block title2 %}Adding new Checklist{% endblock %}
+{% block title3 %}Adding new Checklist{% endblock %}
+
+{% block backButton %}
+<ul class="left">
+    <li><a href="javascript:history.back()">
+        <i class="material-icons">arrow_back</i></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="margin-top:50px;">
+    <form id="checklistAddForm" action="{% url 'checkListCreate' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class=" col s12 m6">
+                <div class="input-field row">
+                    <input type="text" name="name" id="name" class="validate" required/>
+                    <label for="name" class="active">Name</label>
+                </div>
+            </div>
+
+
+            <div class="input-field col s12 m6">
+
+
+                <select id="checks" name="checks" multiple>
+                    <option value="" disabled selected>Select checks</option>
+                    {% for check in check_list %}
+                    <option value="{{ check.id }}">{{ check.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="checks">Checklist</label>
+            </div>
+            <a class="waves-effect waves-light btn white-text right" href="{% url 'checkAddNoTask' %}">new check</a>
+
+
+        </div>
+
+    </form>
+
+
+    <button class="btn waves-effect waves-light right" type="submit" form="checklistAddForm" name="action"
+            onclick="return toastTaskAdded();">Add
+
+    </button>
+
+</div>
+
+{% endblock %}
+{% block script %}
+
+function toastTaskAdded() {
+Materialize.toast('Task added', 3000, 'rounded')
+}
+$('.dropdown-button').dropdown({
+hover: true, constrain_width: false,  belowOrigin: true,  });
+$(document).ready(function () { $('select').material_select(); });
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "tasksApp/base.html" %}
+
+{% block title %}Feedback{% endblock %}
+{% block title2 %}Feedback{% endblock %}
+{% block title3 %}Feedback{% endblock %}
+
+{% block backButton %}
+<ul class="left">
+    <li><a href="javascript:window.location.replace(document.referrer)">
+        <i class="material-icons">arrow_back</i></a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="margin-top:50px;">
+        <form id="feedbackAddForm" action="{% url 'feedbackSend' task.id solution.id %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class=" col s12 m6">
+                    <div class="input-field row">
+                        <textarea id="content" name="content" class="validate materialize-textarea">
+{{ solution.task.feedb_templ_1 }}
+{% for state in state_list %}
+{{ state.chk.name }} -- {{ state.chk.description }}
+{% endfor %}
+{{ solution.task.feedb_templ_2 }}</textarea>
+                        </textarea>
+                        <label for="content" class="active">Feedback</label>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        <button class="btn waves-effect waves-light" type="submit" form="feedbackAddForm" name="action"
+            onclick="return toast();">Send e-mail
+        <i class="material-icons right">send</i>
+    </button>
+</div>
+
+{% endblock %}
+{% block script %}
+{% endblock %}

@@ -1,0 +1,108 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TasksApp - {% block title %}{% endblock %}</title>
+
+    {% load staticfiles %}
+    <!-- Compiled and minified Materialize CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'tasksApp/materialize/css/materialize.min.css' %}">
+    <!-- Personalized style CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'tasksApp/style.css' %}">
+    <!-- Compiled and minified jquery JavaScript -->
+    <script type="text/javascript" src="{% static 'tasksApp/jquery-2.1.4.min.js' %}"></script>
+    <!-- Compiled and minified Materialize JavaScript -->
+    <script type="text/javascript" src="{% static 'tasksApp/materialize/js/materialize.min.js' %}"></script>
+
+</head>
+
+<body>
+<header>
+    <!-- topNavBar -->
+    <nav class="top-nav indigo">
+        <div class="nav-wrapper">
+            <a class="brand-logo center hide-on-med-and-down">{% block title2 %}{% endblock %}</a>
+
+            <a href="#" data-activates="nav-mobile" class="button-collapse hide-on-large-only">
+                <i class="material-icons">menu</i></a>
+
+
+            {% block backButton %}{% endblock %}
+
+            <div class="brand-logo left hide-on-large-only" style="position:relative;">{% block title3 %}{% endblock %}
+            </div>
+
+        </div>
+    </nav>
+    <!-- sideNavBar -->
+    <ul id="nav-mobile" class="side-nav fixed">
+        <div class="section">
+            <div class="row">
+                <div class="col s4">
+                    <img src="{% static 'tasksApp/user.jpg' %}" alt="" class="circle responsive-img">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <p>
+                        username </p>
+                </div>
+            </div>
+        </div>
+        <li class="valign-wrapper">
+            <i class="material-icons left valign">library_books</i>
+            <a href="{% url 'index' %}">Tasks</a>
+
+        </li>
+
+        <!--<li class="valign-wrapper">
+            <!--style="padding-left:40px;"
+            <i class="material-icons left valign">playlist_add_check</i>
+            <a href="#">Checklists</a>
+        </li>
+        <li class="valign-wrapper">
+            <!--style="padding-left:40px;"
+            <i class="material-icons left valign">check</i>
+            <a href="#">Checks</a>
+        </li>-->
+
+
+        <div class="divider"></div>
+
+        <li class="valign-wrapper">
+            <i class="material-icons left valign">receipt</i>
+            <a href="{% url 'AllSolutionList' %}">Solutions</a>
+        </li>
+
+
+        <div class="divider"></div>
+
+        <a href="{% url 'index' %}" class="waves-effect waves-red btn-flat right"
+           style="position:absolute; bottom: 60px; right: 0px;"><i class="material-icons">exit_to_app</i> Logout</a>
+
+    </ul>
+
+
+</header>
+
+
+<main>
+
+    {% block content %}{% endblock %}
+</main>
+
+<script type="text/javascript">
+        $(".button-collapse").sideNav();
+        $(document).ready(function () {
+            $('.modal-trigger').leanModal();
+        });
+        {% block script %}{% endblock %}
+
+
+</script>
+
+</body>
+
+</html>
